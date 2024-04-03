@@ -19,11 +19,12 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const token = this.cookieService.get('token');
+    console.log("TOken",token);
     if (!token) {
       this.router.navigate(['/']); // Redirect to login page if token doesn't exist
     }
 
-    if (token) {
+    if (!!token) {
       const authReq = request.clone({
         setHeaders: {
           Authorization: `${token}`,
@@ -31,8 +32,8 @@ export class AuthInterceptor implements HttpInterceptor {
       });
       return next.handle(authReq).pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 401) {
-            // Unauthorized, token is invalid
+          if (error.status === 403) {
+            this.cookieService.delete('token')
             this.router.navigate(['/']); // Redirect to login page
           }
           return throwError(error);
