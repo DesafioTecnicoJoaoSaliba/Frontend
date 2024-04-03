@@ -35,6 +35,7 @@ export class ProdutoFormComponent {
       this.productForm.get('id').setValue(id)
       this.getProdutoById(id)
     }
+    if(view)
     this.productForm.disable()
 
   }
