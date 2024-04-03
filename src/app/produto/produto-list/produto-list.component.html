@@ -1,4 +1,13 @@
 <div class="mat-elevation-z8">
+
+  <div class="row" [formGroup]="filter">
+    <h2>Filtro</h2>
+    <mat-form-field class="col-8">
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Nome" formControlName="nome">
+    </mat-form-field>
+
+  </div>
   <table mat-table class="full-width-table"  aria-label="Elements">
 
 

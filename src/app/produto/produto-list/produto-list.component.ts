@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import {ProdutoService} from "../produto.service";
 import {ProdutoDTO} from "../api/produtoDTO";
 import {Router} from "@angular/router";
-import {DataSource} from "@angular/cdk/collections";
+import {FormControl, FormGroup} from "@angular/forms";
+import {debounceTime} from "rxjs";
 
 @Component({
   selector: 'app-produto-list',
@@ -15,23 +15,33 @@ import {DataSource} from "@angular/cdk/collections";
 export class ProdutoListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatTable) table!: MatTable<ProdutoDTO>;
-  dataSource : MatTableDataSource<ProdutoDTO> = new MatTableDataSource<ProdutoDTO>();
+  dataSource: MatTableDataSource<ProdutoDTO> = new MatTableDataSource<ProdutoDTO>();
 
-  displayedColumns = [ 'nome','valor','dthCriacao', 'acoes'];
-  pageIndex: number =0;
-  pageSize: number  =10;
-  totalElements: number=0;
+  displayedColumns = ['nome', 'valor', 'dthCriacao', 'acoes'];
+  pageIndex: number = 0;
+  pageSize: number = 10;
+  totalElements: number = 0;
+  filter: FormGroup = new FormGroup({
+    nome: new FormControl(),
+  });
 
-  constructor(private  readonly produtoService:ProdutoService,
+  constructor(private readonly produtoService: ProdutoService,
               private readonly router: Router) {
+
+    this.filter.valueChanges.pipe(
+      debounceTime(500)
+    ).subscribe(value => {
+      this.refresh()
+    });
   }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.refresh()
   }
 
-  refresh($event: PageEvent={length:0,pageIndex:this.pageIndex,pageSize:this.pageSize}) {
-    this.produtoService.getProductList($event.pageIndex,$event.pageSize).subscribe(value => {
+  refresh($event: PageEvent = {length: 0, pageIndex: this.pageIndex, pageSize: this.pageSize}) {
+    this.produtoService.getProductList($event.pageIndex, $event.pageSize, this.filter.get('nome').value).subscribe(value => {
       this.table.dataSource = value.content
       this.totalElements = value.totalElements
     })
@@ -41,8 +51,6 @@ export class ProdutoListComponent implements AfterViewInit {
   deleteProduto(id) {
     this.produtoService.deleteProduto(id).subscribe(value => this.refresh())
   }
-
-
 
 
   formatDate(dateString: string): string {
@@ -62,11 +70,11 @@ export class ProdutoListComponent implements AfterViewInit {
   }
 
   editarProduto(id) {
-    this.router.navigate(['produto','edit',id])
+    this.router.navigate(['produto', 'edit', id])
   }
 
   verProduto(id) {
-    this.router.navigate(['produto','view',id])
+    this.router.navigate(['produto', 'view', id])
 
   }
 }
