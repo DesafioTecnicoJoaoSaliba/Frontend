@@ -64,4 +64,9 @@ export class ProdutoListComponent implements AfterViewInit {
   editarProduto(id) {
     this.router.navigate(['produto','edit',id])
   }
+
+  verProduto(id) {
+    this.router.navigate(['produto','view',id])
+
+  }
 }

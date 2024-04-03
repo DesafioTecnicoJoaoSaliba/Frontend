@@ -15,6 +15,12 @@ const routes: Routes = [
   {
     component: ProdutoFormComponent,
     path:'edit/:id',
+  }, {
+    component: ProdutoFormComponent,
+    path:'view/:id',
+    data:{
+      view:true
+    }
   }
 ];
 

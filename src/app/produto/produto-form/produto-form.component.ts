@@ -29,11 +29,14 @@ export class ProdutoFormComponent {
               private readonly  aRouter: ActivatedRoute,
               private  readonly router: Router) {
    const id =this.aRouter.snapshot.params['id']
+   const view =this.aRouter.snapshot.data['view']
     if(!!id){
       this.isCadastro =false
       this.productForm.get('id').setValue(id)
       this.getProdutoById(id)
     }
+    this.productForm.disable()
+
   }
 
   onSave() {
