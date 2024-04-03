@@ -21,4 +21,9 @@ export class ProdutoService {
   deleteProduto(id) {
   return  this.httpClient.delete(`${this.uri}/${id}`)
   }
+
+  save(produto: ProdutoDTO) {
+    return this.httpClient.post<ProdutoDTO>(this.uri, produto)
+
+  }
 }

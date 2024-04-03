@@ -9,6 +9,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {ReactiveFormsModule} from "@angular/forms";
+import {CurrencyMaskModule} from "ng2-currency-mask";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -23,7 +27,11 @@ import {MatButtonModule} from "@angular/material/button";
     MatPaginatorModule,
     MatSortModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    CurrencyMaskModule,
+    MatCardModule
   ]
 })
 export class ProdutoModule { }
