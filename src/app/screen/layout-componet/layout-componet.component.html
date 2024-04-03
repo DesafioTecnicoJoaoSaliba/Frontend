@@ -1,0 +1,33 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side"  class="example-container" opened>
+    <mat-nav-list class="mt-5">
+      <ng-container *ngFor="let item of menuItems">
+        <mat-list-item [routerLink]="item.route" routerLinkActive="active">
+          <span mat-line>{{ item.label }}</span>
+        </mat-list-item>
+
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="drawer-content">
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="flex-spacer"></span>
+
+      <span>Controle de Produtos</span>
+      <span class="flex-spacer"></span>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div class="center-card mt-5">
+      <mat-card class="card">
+        <mat-card-content>
+          <router-outlet></router-outlet>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
