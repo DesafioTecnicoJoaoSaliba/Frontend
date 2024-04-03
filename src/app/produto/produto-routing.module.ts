@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     component: ProdutoFormComponent,
     path:'cadastro',
+  },
+  {
+    component: ProdutoFormComponent,
+    path:'edit/:id',
   }
 ];
 

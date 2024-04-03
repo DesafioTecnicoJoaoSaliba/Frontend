@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {ProdutoService} from "../produto.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-produto-form',
@@ -24,14 +25,33 @@ export class ProdutoFormComponent {
   };
   isCadastro: boolean =true;
 
-  constructor(private readonly produtoService:ProdutoService) {
-
+  constructor(private readonly produtoService:ProdutoService,
+              private readonly  aRouter: ActivatedRoute,
+              private  readonly router: Router) {
+   const id =this.aRouter.snapshot.params['id']
+    if(!!id){
+      this.isCadastro =false
+      this.productForm.get('id').setValue(id)
+      this.getProdutoById(id)
+    }
   }
 
   onSave() {
     this.produtoService.save(this.productForm.getRawValue()).subscribe(value => {
       this.productForm.patchValue(value)
+      this.redirectToList()
     })
 
+  }
+
+  private getProdutoById(id: number) {
+    this.produtoService.getProdutoById(id).subscribe(value => {
+      this.productForm.patchValue(value)
+    })
+
+  }
+
+  redirectToList(){
+    this.router.navigate(['produto','list'])
   }
 }

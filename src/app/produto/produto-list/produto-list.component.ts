@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatTable } from '@angular/material/table';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ProdutoListDataSource, ProdutoListItem } from './produto-list-datasource';
 import {ProdutoService} from "../produto.service";
 import {ProdutoDTO} from "../api/produtoDTO";
+import {Router} from "@angular/router";
+import {DataSource} from "@angular/cdk/collections";
 
 @Component({
   selector: 'app-produto-list',
@@ -14,14 +15,15 @@ import {ProdutoDTO} from "../api/produtoDTO";
 export class ProdutoListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatTable) table!: MatTable<ProdutoDTO>;
-  dataSource = new ProdutoListDataSource();
+  dataSource : MatTableDataSource<ProdutoDTO> = new MatTableDataSource<ProdutoDTO>();
 
   displayedColumns = [ 'nome','valor','dthCriacao', 'acoes'];
   pageIndex: number =0;
   pageSize: number  =10;
   totalElements: number=0;
 
-  constructor(private  readonly produtoService:ProdutoService) {
+  constructor(private  readonly produtoService:ProdutoService,
+              private readonly router: Router) {
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -57,5 +59,9 @@ export class ProdutoListComponent implements AfterViewInit {
 
   private pad(value: number): string {
     return value < 10 ? '0' + value : value.toString();
+  }
+
+  editarProduto(id) {
+    this.router.navigate(['produto','edit',id])
   }
 }

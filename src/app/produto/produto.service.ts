@@ -26,4 +26,8 @@ export class ProdutoService {
     return this.httpClient.post<ProdutoDTO>(this.uri, produto)
 
   }
+
+  getProdutoById(id: number) {
+    return  this.httpClient.get(`${this.uri}/${id}`)
+  }
 }

@@ -19,7 +19,6 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const token = this.cookieService.get('token');
-    console.log("TOken",token);
     if (!token) {
       this.router.navigate(['/']); // Redirect to login page if token doesn't exist
     }

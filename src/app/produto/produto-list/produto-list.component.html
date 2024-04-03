@@ -24,6 +24,9 @@
         <button mat-mini-fab color="warn" aria-label="Excluir produto" (click)="deleteProduto(row.id)">
           <mat-icon>delete_forever</mat-icon>
         </button>
+        <button class="ml-4" mat-mini-fab color="primary" aria-label="Editar produto" (click)="editarProduto(row.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
       </td>
     </ng-container>
 
