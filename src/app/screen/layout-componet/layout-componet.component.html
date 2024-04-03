@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side"  class="example-container" opened>
+  <mat-sidenav #sidenav mode="side"  [style.width.px]="250" class="example-container" opened>
     <mat-nav-list class="mt-5">
       <ng-container *ngFor="let item of menuItems">
         <mat-list-item [routerLink]="item.route" routerLinkActive="active">

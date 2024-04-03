@@ -10,11 +10,11 @@ import { LoginService } from 'src/app/user/service/login.service';
 })
 export class LayoutComponetComponent implements OnInit {
   menuItems: any[] = [
-    {
-      label: 'Inicio',
-      route: '/produto/list',
-    },
-    { label: 'Lista Produto', route: '/produto/list' },
+    // {
+    //   label: 'Inicio',
+    //   route: '/produto/list',
+    // },
+    { label: 'Lista Produtos', route: '/produto/list' },
     { label: 'Cadastro Produto', route: '/produto/cadastro' },
 
   ];
